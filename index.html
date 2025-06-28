@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css"/>
+    <title>Task Board</title>
+</head>
+<body>
+    <header class="header">
+        <h1>Task Board</h1>
+    </header>
+    <div class="overlay hidden"></div>
+    <form class="addForm hidden">
+        <h1>Add new task</h1>
+        <label for="title-input">Title</label>
+        <input type="text" id="title-input">
+        <label for="date-input">Date</label>
+        <input type="datetime-local" id="date-input" value="" max="9999-12-31T23:59">
+        <label for="description-input">Description</label>
+        <textarea id="description-input" rows="5"></textarea>
+        <div class="formButtons">
+            <button class="submit Btn" type="submit">Add task</button>
+            <button class="cancel Btn" type="button">Cancel</button>
+        </div>
+        
+    </form>
+    <main>
+        <section class="board-1">
+            <header class="boardHeader">
+                <p>Board-1</p>
+                <div class="boardHeaderButtons">
+                    <button class="addTaskBtn">Add Task</button>
+                    <button class="editTaskBtn">Edit Task</button>
+                    <button class="deleteTaskBtn">Delete Task</button>
+                </div>
+            </header>
+            <div class="scheduledTasks">
+                <h2>Sheduled tasks</h2>
+                <article class="task-1">
+                    <h3>task-1</h3>
+                    <p class="task-1_DateTime">28.06.2025</p>
+                    <p class="task-1_Description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium cumque quaerat sit, autem facilis voluptatem. Voluptates, eum doloremque! Corporis quis hic illo temporibus officia molestias velit tempora, obcaecati soluta perspiciatis?</p>
+                </article>
+                <article class="task-1">
+                    <h3>task-1</h3>
+                    <p class="task-1_DateTime">28.06.2025</p>
+                    <p class="task-1_Description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium cumque quaerat sit, autem facilis voluptatem. Voluptates, eum doloremque! Corporis quis hic illo temporibus officia molestias velit tempora, obcaecati soluta perspiciatis?</p>
+                </article>
+                <article class="task-1">
+                    <h3>task-1</h3>
+                    <p class="task-1_DateTime">28.06.2025</p>
+                    <p class="task-1_Description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium cumque quaerat sit, autem facilis voluptatem. Voluptates, eum doloremque! Corporis quis hic illo temporibus officia molestias velit tempora, obcaecati soluta perspiciatis?</p>
+                </article>
+            </div>
+            <hr>
+            <div class="tasksInProgress"><h2>Tasks in progress</h2></div>
+            <hr>
+            <div class="completedTasks"><h2>Completed tasks</h2></div>
+            
+        </section>
+        
+
+        <button class="createBtn">
+            <p>Create Board</p>
+        </button>
+    </main>
+   
+    
+    <script src="script.js"></script>
+</body>
+</html>
