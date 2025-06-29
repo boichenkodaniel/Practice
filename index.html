@@ -4,68 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=edit_square" />
     <title>Task Board</title>
 </head>
 <body>
     <header class="header">
         <h1>Task Board</h1>
     </header>
-    <div class="overlay hidden"></div>
-    <form class="addForm hidden">
+    <div class="overlay hidden" id="overlay"></div>
+    <form class="addTaskForm hidden" id="addTaskForm">
         <h1>Add new task</h1>
-        <label for="title-input">Title</label>
-        <input type="text" id="title-input">
-        <label for="date-input">Date</label>
-        <input type="datetime-local" id="date-input" value="" max="9999-12-31T23:59">
-        <label for="description-input">Description</label>
-        <textarea id="description-input" rows="5"></textarea>
+        <label for="addTaskTitle-input">Title</label>
+        <input type="text" id="addTaskTitle-input">
+        <label for="addTaskDate-input">Date</label>
+        <input type="datetime-local" id="addTaskDate-input" value="" max="9999-12-31T23:59">
+        <label for="addTaskDescription-input">Description</label>
+        <textarea id="addTaskDescription-input" rows="5"></textarea>
         <div class="formButtons">
-            <button class="submit Btn" type="submit">Add task</button>
-            <button class="cancel Btn" type="button">Cancel</button>
+            <button class="submitTask Btn" id="submitTaskBtn" type="submit">Add task</button>
+            <button class="cancelTask Btn" id="cancelTaskBtn" type="button">Cancel</button>
         </div>
-        
     </form>
-    <main>
-        <section class="board-1">
-            <header class="boardHeader">
-                <p>Board-1</p>
-                <div class="boardHeaderButtons">
-                    <button class="addTaskBtn">Add Task</button>
-                    <button class="editTaskBtn">Edit Task</button>
-                    <button class="deleteTaskBtn">Delete Task</button>
-                </div>
-            </header>
-            <div class="scheduledTasks">
-                <h2>Sheduled tasks</h2>
-                <article class="task-1">
-                    <h3>task-1</h3>
-                    <p class="task-1_DateTime">28.06.2025</p>
-                    <p class="task-1_Description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium cumque quaerat sit, autem facilis voluptatem. Voluptates, eum doloremque! Corporis quis hic illo temporibus officia molestias velit tempora, obcaecati soluta perspiciatis?</p>
-                </article>
-                <article class="task-1">
-                    <h3>task-1</h3>
-                    <p class="task-1_DateTime">28.06.2025</p>
-                    <p class="task-1_Description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium cumque quaerat sit, autem facilis voluptatem. Voluptates, eum doloremque! Corporis quis hic illo temporibus officia molestias velit tempora, obcaecati soluta perspiciatis?</p>
-                </article>
-                <article class="task-1">
-                    <h3>task-1</h3>
-                    <p class="task-1_DateTime">28.06.2025</p>
-                    <p class="task-1_Description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium cumque quaerat sit, autem facilis voluptatem. Voluptates, eum doloremque! Corporis quis hic illo temporibus officia molestias velit tempora, obcaecati soluta perspiciatis?</p>
-                </article>
-            </div>
-            <hr>
-            <div class="tasksInProgress"><h2>Tasks in progress</h2></div>
-            <hr>
-            <div class="completedTasks"><h2>Completed tasks</h2></div>
-            
-        </section>
+    <form class="addBoardForm hidden" id="addBoardForm">
+        <h1>Add new board</h1>
+        <label for="AddBoardTitle-input">Title</label>
+        <input type="text" id="AddBoardTitle-input">
+        <div class="formButtons">
+            <button class="submitBoard Btn" id="submitBoardBtn" type="submit">Add Board</button>
+            <button class="cancelBoard Btn" id="cancelBoardBtn" type="button">Cancel</button>
+        </div>
+    </form>
+    <main id="main">
         
-
-        <button class="createBtn">
-            <p>Create Board</p>
-        </button>
+        <!-- 
+        <article class="task-1">
+            <h3>task-1</h3>
+            <p class="task-1_DateTime">28.06.2025</p>
+            <p class="task-1_Description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium cumque quaerat sit, autem facilis voluptatem. Voluptates, eum doloremque! Corporis quis hic illo temporibus officia molestias velit tempora, obcaecati soluta perspiciatis?</p>
+        </article>
+        <article class="task-1">
+            <h3>task-1</h3>
+            <p class="task-1_DateTime">28.06.2025</p>
+            <p class="task-1_Description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusantium cumque quaerat sit, autem facilis voluptatem. Voluptates, eum doloremque! Corporis quis hic illo temporibus officia molestias velit tempora, obcaecati soluta perspiciatis?</p>
+        </article>    -->
     </main>
-   
+   <button class="createBtn" id="createBtn">Create Board</button>
     
     <script src="script.js"></script>
 </body>

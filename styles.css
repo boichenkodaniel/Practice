@@ -15,7 +15,6 @@ main{
     display: flex;
     flex-direction: column;
     gap:20px;
-    height: 100%;
 }
 .createBtn{
     height: 100px;
@@ -24,7 +23,7 @@ main{
     text-align: center;
     border: 2px black dashed;
     border-radius: 20px;
-
+    margin-block: 20px;
 }
 .createBtn:hover{
     background-color: lightgrey;
@@ -48,8 +47,11 @@ section{
     padding: 5px;
     width: 150px;
 }
-
-article:hover{
+.boardHeaderTitle{
+    max-width: 900px;
+    word-wrap: break-word;
+}
+ article:hover{
     background-color: aquamarine;
 }
 hr{
@@ -67,11 +69,10 @@ h2{
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px); /* Размытие фона */
     z-index: 100;
 }
 
-.addForm{
+.addBoardForm,.addTaskForm{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -82,7 +83,7 @@ h2{
     display: flex;
     flex-direction: column;
     gap:8px;
-    position: absolute;
+    position: fixed;
     align-self: center;
     justify-self: center;
     border:2px solid black;
@@ -98,4 +99,9 @@ h2{
 }
 .Btn{
     width: 180px;
+}
+article{
+    padding: 8px;
+    display: grid;
+    grid-template-columns: ;
 }
