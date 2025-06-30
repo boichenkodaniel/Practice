@@ -10,6 +10,7 @@ const addTaskTitleInput = document.getElementById("addTaskTitle-input")
 const addTaskDateInput = document.getElementById("addTaskDate-input")
 const addTaskDescriptionInput = document.getElementById("addTaskDescription-input")
 const cancelTaskBtn = document.getElementById("cancelTaskBtn")
+
 addOrEditBoardBtn.addEventListener("click", ()=> {
     addBoardForm.classList.toggle("hidden");
     overlay.classList.toggle("hidden");
@@ -22,17 +23,27 @@ const resetAddBoard = ()=>{
     overlay.classList.toggle("hidden");
     addBoardTitleInput.value ='';
 }
-
+const resetAddTask = ()=>{
+    addTaskForm.classList.toggle("hidden");
+    overlay.classList.toggle("hidden");
+    addTaskTitleInput.value='';
+    addTaskDateInput.value='';
+    addTaskDescriptionInput.value=''
+}
 cancelBoardBtn.addEventListener("click",resetAddBoard)
+
 cancelTaskBtn.addEventListener("click", ()=>{addTaskForm.classList.toggle("hidden")
     overlay.classList.toggle("hidden")})
+
+
 
 const resetAddOrEditTask = (Btn)=>{
     addTaskForm.classList.toggle("hidden")
     overlay.classList.toggle("hidden")
-    const boardArrIndex = boards.findIndex((board)=>board.id === Btn.parentElement.parentElement.id)
-    
-    addTaskForm.addEventListener('submit',(e)=>{
+    currentBoard = boards.findIndex((board)=>board.id === Btn.parentElement.parentElement.id)
+    }    
+
+addTaskForm.addEventListener('submit',(e)=>{
         e.preventDefault();
         const newTask = {
             id:`${addTaskTitleInput.value.toLowerCase().split(" ").join("-")}-${Date.now()}`,
@@ -40,13 +51,11 @@ const resetAddOrEditTask = (Btn)=>{
             date: addTaskDateInput.value,
             description: addTaskDescriptionInput.value
         };
-        boards[boardArrIndex].sheduledTasks.push(newTask);
+        boards[currentBoard].sheduledTasks.push(newTask);
         localStorage.setItem("data",JSON.stringify(boards));
-        addTaskForm.classList.toggle("hidden")
-        overlay.classList.toggle("hidden")
+        resetAddTask();
         resetAll();
-})}    
-
+})
 const resetAll = ()=>{
     mainContainer.innerHTML =''
     boards.forEach(board => {
@@ -54,6 +63,7 @@ const resetAll = ()=>{
          <section class="board" id="${board.id}">
             <div class="boardHeader">
                 <p class="boardHeaderTitle">${board.title}</p>
+                <button class="deleteBoardBtn" onclick ="deleteBoard(this)"><span class="material-symbols-outlined"> delete </span></button>
                 <button class="addTaskBtn" id="addTaskBtn" onclick="resetAddOrEditTask(this)"> Add Task</button>
             </div>
             <div class="scheduledTasks">
@@ -61,10 +71,10 @@ const resetAll = ()=>{
                 ${board.sheduledTasks.map(task => `
                     <article class="task" id="${task.id}">
                         <h3>${task.title}</h3>
-                        <p class="taskDateTime">${task.date.replace('T',' ')}</p>
-                        <button><span class="material-symbols-outlined"> edit_square </span></button>
+                        <p class="taskDateTime">${task.date.split('T')[0].split('-').reverse().join('.')+ ' ' +task.date.split('T')[1]}</p>
+                        <button class="editTaskBtn" ><span class="material-symbols-outlined"> edit_square </span></button>
+                        <button class="deleteTaskBtn" onclick ="deleteTask(this)"><span class="material-symbols-outlined"> delete </span></button>
                         <p class="taskDescription">${task.description}</p>
-                        
                     </article>`).join("")|| ''}
             </div>
             <hr>
@@ -91,6 +101,8 @@ const resetAll = ()=>{
     });
 }
 if (boards.length){resetAll();}
+
+
 addBoardForm.addEventListener('submit',(e)=>{
     e.preventDefault();
     const newBoard = {
@@ -106,4 +118,16 @@ addBoardForm.addEventListener('submit',(e)=>{
     resetAll();
 })
 
-
+const deleteTask = (Btn)=>{
+    const boardArrIndex = boards.findIndex((board)=>board.sheduledTasks.findIndex((task)=>task.id === Btn.parentElement.id)>=0 ||
+    board.progressTasks.findIndex((task)=>task.id === Btn.parentElement.id) >=0 ||
+    board.completedTasks.findIndex((task)=>task.id === Btn.parentElement.id) >=0 )
+    const sheduledTaskArrIndex = boards[boardArrIndex].sheduledTasks.findIndex((task)=>task.id === Btn.parentElement.id)
+    const progressTaskArrIndex = boards[boardArrIndex].progressTasks.findIndex((task)=>task.id === Btn.parentElement.id)
+    const completedTaskArrIndex = boards[boardArrIndex].completedTasks.findIndex((task)=>task.id === Btn.parentElement.id)  
+    if (sheduledTaskArrIndex >=0) { boards[boardArrIndex].sheduledTasks.splice(sheduledTaskArrIndex,1)};
+    if (progressTaskArrIndex >=0) { boards[boardArrIndex].progressTasks.splice(progressTaskArrIndex,1)};
+    if (completedTaskArrIndex >=0) {delete boards[boardArrIndex].completedTasks.splice(completedTaskArrIndex,1)};
+    localStorage.setItem("data",JSON.stringify(boards));
+    resetAll();
+}
