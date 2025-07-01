@@ -40,7 +40,7 @@ section{
 }
 .boardHeader{
     display: grid;
-    grid-template-columns: min-content 1fr min-content;
+    grid-template-columns: min-content min-content 1fr min-content;
     font-size:30px;
     grid-column:1/-1 ;
     gap:8px;
@@ -50,13 +50,18 @@ section{
     max-width: 900px;
     word-wrap: break-word;
 }
-.deleteBoardBtn{
+.editBoardBtn{
     grid-column: 2;
+    width: 30px;
+    height: 30px
+}
+.deleteBoardBtn{
+    grid-column: 3;
     width: 30px;
     height: 30px;
 }
 .addTaskBtn{
-    grid-column: 3;
+    grid-column: 4;
     width: 100px;
 }
  article:hover{
