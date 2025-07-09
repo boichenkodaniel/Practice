@@ -14,7 +14,10 @@ const addTaskHeader = document.getElementById("addTaskHeader")
 const submitTaskBtn = document.getElementById("submitTaskBtn")
 const addBoardHeader = document.getElementById("addBoardHeader")
 const submitBoardBtn = document.getElementById("submitBoardBtn")
-let currentBoard, currentTask, currentBoardIndex=0, draggedTask = null;
+const switchModeBtn = document.getElementById("switchModeBtn")
+const darkModeIcon = document.getElementById("darkModeIcon")
+const lightModeIcon = document.getElementById("lightModeIcon")
+let currentBoard, currentTask, currentBoardIndex=0, currentTheme = "light", draggedTask = null;
 
 
 createBtn.addEventListener("click", ()=> {
@@ -24,7 +27,12 @@ createBtn.addEventListener("click", ()=> {
 });
 
 const findBoardIndex = (boardId) => {
-    return boards.findIndex(board => board.id === boardId);
+    const index = boards.findIndex(board => board.id === boardId);
+    if (index === -1) {
+        alert(`Board with ID "${boardId}" not found!`);
+        return
+    }else { return index }
+
 };
 
 const resetAddBoard = () => {
@@ -50,8 +58,8 @@ const resetAll = ()=>{
             <div class="scheduledTasks" ondragover="handleDragOver(event)" 
                  ondragleave="handleDragLeave(event)" 
                  ondrop="handleDrop(event)">
-                <h2>Sheduled tasks</h2>
-                ${board.sheduledTasks.map(task => `
+                <h2>Scheduled tasks</h2>
+                ${board.scheduledTasks.map(task => `
                     <article class="task" id="${task.id}" draggable="true" ondragstart="handleDragStart(event)"
                              ondragend="handleDragEnd(event)" ondblclick="fastMove(this)">
                         <h3>${task.title}</h3>
@@ -94,6 +102,7 @@ const resetAll = ()=>{
         </section>`
     });
 }
+
 addBoardForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if(!addBoardTitleInput.value.trim()){
@@ -103,7 +112,7 @@ addBoardForm.addEventListener('submit', (e) => {
     }
     const boardData = {
         title: addBoardTitleInput.value,
-        sheduledTasks: [],
+        scheduledTasks: [],
         progressTasks: [],
         completedTasks: []
     };
@@ -117,7 +126,7 @@ addBoardForm.addEventListener('submit', (e) => {
     } else {
         const boardIndex = findBoardIndex(currentBoard.id);
         if (boardIndex >= 0) {
-            boardData.sheduledTasks = boards[boardIndex].sheduledTasks;
+            boardData.scheduledTasks = boards[boardIndex].scheduledTasks;
             boardData.progressTasks = boards[boardIndex].progressTasks;
             boardData.completedTasks = boards[boardIndex].completedTasks;
             
@@ -168,7 +177,7 @@ const deleteBoard = (btn) => {
 
 const findTaskLocation = (taskId) => {
     for (const board of boards) {
-        const lists = ['sheduledTasks', 'progressTasks', 'completedTasks'];
+        const lists = ['scheduledTasks', 'progressTasks', 'completedTasks'];
         for (const list of lists) {
             const taskIndex = board[list].findIndex(task => task.id === taskId);
             if (taskIndex >= 0) {  
@@ -176,9 +185,10 @@ const findTaskLocation = (taskId) => {
             }
         }
     }
+    alert(`Task with ID "${taskId}" not found!`)
     return null;
 };
-
+         
 const resetAddTask = (board)=>{
     currentBoardIndex = findBoardIndex(board)
     addTaskForm.classList.toggle("hidden");
@@ -237,7 +247,7 @@ addTaskForm.addEventListener('submit',(e)=>{
     e.preventDefault();
     if(!addTaskTitleInput.value.trim()){
         alert("Task name cannot be empty!")
-        addBoardTitleInput.focus();
+        addTaskTitleInput.focus();
         return;
     }
     
@@ -255,7 +265,7 @@ addTaskForm.addEventListener('submit',(e)=>{
         ...taskData,
         id: `${taskData.title.toLowerCase().split(" ").join("-")}-${Date.now()}`
     };
-    boards[currentBoardIndex].sheduledTasks.push(newTask);
+    boards[currentBoardIndex].scheduledTasks.push(newTask);
 } else {
     const { board, list, taskIndex } = currentTask.originalLocation;
     board[list][taskIndex] = {
@@ -265,7 +275,8 @@ addTaskForm.addEventListener('submit',(e)=>{
     currentTask = null;
 }
     localStorage.setItem("data", JSON.stringify(boards));
-    resetAddTask();
+    addTaskForm.classList.toggle("hidden");
+    overlay.classList.toggle("hidden");
     resetAll();
 })
 
@@ -291,7 +302,7 @@ const handleDragOver = (e) => {
     e.preventDefault();
     const targetList = e.target.closest('.scheduledTasks, .tasksInProgress, .completedTasks');
     if (targetList) {
-        targetList.style.backgroundColor = '#f0f0f0';
+        targetList.style.backgroundColor = '#3F92D2';
     }
 };
 
@@ -323,7 +334,7 @@ const updateTaskPosition = (taskId, boardIndex, sourceListType, targetListType) 
     if (boardIndex === -1) return;
 
     const getListName = (className) => {
-        if (className.includes('scheduledTasks')) return 'sheduledTasks';
+        if (className.includes('scheduledTasks')) return 'scheduledTasks';
         if (className.includes('tasksInProgress')) return 'progressTasks';
         if (className.includes('completedTasks')) return 'completedTasks';
         return null;
@@ -349,7 +360,7 @@ const fastMove = (e) =>{
     const task = board[list][taskIndex];
 
     let nextList;
-    if (list === "sheduledTasks") {
+    if (list === "scheduledTasks") {
         nextList = "progressTasks";
     } else if (list === "progressTasks") {
         nextList = "completedTasks";
@@ -361,3 +372,18 @@ const fastMove = (e) =>{
     localStorage.setItem("data", JSON.stringify(boards));
     resetAll();
 }
+
+switchModeBtn.addEventListener("click",()=>{
+    if (currentTheme==="light"){
+        lightModeIcon.style.display="none"
+        darkModeIcon.style.display="block"
+        currentTheme="dark"
+        document.documentElement.setAttribute('theme', 'dark');
+    }else{
+        lightModeIcon.style.display="block"
+        darkModeIcon.style.display="none"
+        currentTheme="light"
+        document.documentElement.removeAttribute('theme');
+    }
+
+})

@@ -1,3 +1,17 @@
+:root{
+    --background:#b0d6fa;
+    --text:#033E6B;
+    --board:#66A3D2;
+    --border:#033E6B;
+    --btn:#0B61A4;
+    --btn-background:#447BD4
+}
+[theme="dark"]{
+    --background:#25567B;
+    --text:#97caf1;
+    --board:#033E6B;
+    --border:#66A3D2;
+}
 *{
     margin: 0;
     padding: 0;
@@ -6,11 +20,15 @@ html{
     height: 100%;
 }
 body{
+    background-color:var(--background) ;
+    color:var(--text);
     height: 100%;
     padding: 0 20px;
 }
 .header{
-    margin: 20px;
+    margin-block: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 main{
     display: flex;
@@ -20,26 +38,14 @@ main{
 .createBtn{
     height: 100px;
     width: 30%;
+    max-width: 400px;
     align-content: center;
     text-align: center;
-    border: 2px black dashed;
-    border-radius: 20px;
     margin-block: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
-.createBtn:hover{
-    background-color: lightgrey;
-}
-section{
-    border: 2px solid black;
-    border-radius: 20px;
-    height: min-content;
-    padding:20px;
-    display:grid;
-    gap:16px 8px;
-    grid-template-columns:1fr auto 1fr auto 1fr;
-    
-  
-}
+
 .boardHeader{
     display: grid;
     grid-template-columns: min-content min-content 1fr min-content;
@@ -50,30 +56,31 @@ section{
 
 .boardHeaderTitle{
     max-width: 900px;
+    font-size:2.5rem;
     word-wrap: break-word;
 }
 .editBoardBtn{
     grid-column: 2;
-    width: 30px;
-    height: 30px
+    width: 40px;
+    height: 40px;
+    align-self: center;
 }
 .deleteBoardBtn{
     grid-column: 3;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
+    align-self: center;
 }
 .addTaskBtn{
     grid-column: 4;
     width: 100px;
+    font-weight:800 ;
 }
- article:hover{
-    background-color: aquamarine;
-    border-radius: 10px;
-}
+
 hr{
     border: none;
     width: 1px;
-    background-color:black;
+    background-color:var(--border);
 }
 h2{
     text-align: center;
@@ -102,9 +109,9 @@ h2{
     position: fixed;
     align-self: center;
     justify-self: center;
-    border:2px solid black;
+    border:2px solid var(--border);
     border-radius: 20px;
-    background-color: aliceblue;
+    background-color: var(--board);
 }
 .hidden{
     display: none; 
@@ -113,15 +120,34 @@ h2{
     display: flex;
     justify-content: space-between;
 }
-.Btn{
+.submitBoardBtn, .cancelBoardBtn, .submitTaskBtn, .cancelTaskBtn{
     width: 180px;
+    height: 30px;
 }
-article{
+.task{
     padding: 10px;
     display: grid;
     grid-template-columns: 1fr min-content min-content;
     gap:5px;
     word-wrap: break-word;
+}
+.task:hover{
+    background-color: #3F92D2;
+    border-radius: 10px;
+}
+input,textarea{
+    color: #033E6B;
+    padding: 5px;
+    border:2px solid var(--border);
+    border-radius: 5px;
+    outline:none;
+}
+textarea{
+    padding:0;
+}
+input:focus, textarea:focus{
+    border-color: var(--border);
+    box-shadow:0 0 2px 1px var(--border);
 }
 .deleteTaskBtn{
     width: 40px;
@@ -140,4 +166,41 @@ article{
 }
 .taskDescription{
     grid-row:3;
+    grid-column: 1/-1;
+}
+.board{
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    height: min-content;
+    padding:20px;
+    display:grid;
+    gap:16px 8px;
+    grid-template-columns:1fr auto 1fr auto 1fr; 
+    background-color: var(--board)	;
+}
+.editTaskBtn, .addTaskBtn, .editBoardBtn, .deleteBoardBtn,.deleteTaskBtn,.createBtn, .submitBoardBtn, .cancelBoardBtn, .submitTaskBtn, .cancelTaskBtn{
+    background-color: var(--btn-background);
+    color:#033E6B;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    
+}
+.editTaskBtn:hover, .addTaskBtn:hover, .editBoardBtn:hover, .deleteBoardBtn:hover,.deleteTaskBtn:hover,.createBtn:hover,.submitBoardBtn:hover, .cancelBoardBtn:hover, .submitTaskBtn:hover, .cancelTaskBtn:hover{
+    background-color: var(--btn);
+    color:var(--btn-background)
+}
+.scheduledTasks, .tasksInProgress, .completedTasks{
+    border-radius: 20px;
+}
+#darkModeIcon{
+    display: none;
+
+}
+.switchModeBtn{
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    border:1px solid var(--border);
+    background-color: var(--board);
+    color:var(--text)
 }
