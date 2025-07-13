@@ -17,8 +17,13 @@ const submitBoardBtn = document.getElementById("submitBoardBtn")
 const switchModeBtn = document.getElementById("switchModeBtn")
 const darkModeIcon = document.getElementById("darkModeIcon")
 const lightModeIcon = document.getElementById("lightModeIcon")
-let currentBoard, currentTask, currentBoardIndex=0, currentTheme = "light", draggedTask = null;
+let currentBoard, currentTask, currentBoardIndex=0, currentTheme = localStorage.getItem('theme'), draggedTask = null;
 
+if (currentTheme === "dark"){
+        lightModeIcon.style.display="none"
+        darkModeIcon.style.display="block"
+        currentTheme="dark"
+        document.documentElement.setAttribute('theme', 'dark');}
 
 createBtn.addEventListener("click", ()=> {
     addBoardForm.classList.toggle("hidden");
@@ -385,5 +390,5 @@ switchModeBtn.addEventListener("click",()=>{
         currentTheme="light"
         document.documentElement.removeAttribute('theme');
     }
-
+    localStorage.setItem('theme', currentTheme)
 })
